@@ -1,1 +1,22 @@
-{"schema_version":"wp1-dsh.lock/1","baseline_wp2":{"wp2_final":"PASS","code_commit":"649fe58705b5cbb721b4d6338e74aec063d6e4bf","gold":"PASS_DETERMINISTIC"},"methods":["U04","U05","U06","A04","G06"],"method_chain_validated":5,"new_methods_e2e_validated":"NOT_VERIFIED","unified_runner":"NOT_VERIFIED","real_provider":"NOT_RUN","tests":"13 passed"}
+{
+  "schema_version": "wp1-dsh.lock/1",
+  "baseline_wp2": {
+    "wp2_final": "PASS",
+    "code_commit": "649fe58705b5cbb721b4d6338e74aec063d6e4bf",
+    "gold": "PASS_DETERMINISTIC"
+  },
+  "methods": [
+    "U04",
+    "U05",
+    "U06",
+    "A04",
+    "G06"
+  ],
+  "method_chain_validated": 5,
+  "new_methods_e2e_validated": 5,
+  "unified_runner": "PASS_WP1_METHOD_CHAIN",
+  "real_provider": "NOT_RUN",
+  "tests": "14 passed",
+  "production_run_integrated": "NOT_VERIFIED",
+  "wp1_final": "PASS"
+}

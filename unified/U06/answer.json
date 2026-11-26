@@ -1,0 +1,4 @@
+{
+  "base_api": "aclnnAdd",
+  "inplace_api": "aclnnInplaceAdd"
+}
