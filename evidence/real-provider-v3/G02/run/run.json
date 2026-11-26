@@ -1,0 +1,20 @@
+{
+  "binding_sha256": "5557b1d7dbf4452a6c035dfb053eca932e4c9760878cc0ae47b90cf1f915ee24",
+  "network_calls": 0,
+  "oracle_hash": "34287d603dcefb106e51bbca7d3088464b96d0dd6abe83909cc77130949ef275",
+  "oracle_id": "oracle_G02_wp1",
+  "oracle_mode": "B",
+  "provider_calls": 0,
+  "run_id": "run",
+  "verdict": {
+    "matched": [],
+    "required": [
+      "end_line",
+      "quote",
+      "source_uri",
+      "start_line"
+    ],
+    "score": 0.0,
+    "verdict": "FAIL"
+  }
+}

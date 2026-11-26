@@ -1,0 +1,1 @@
+{"parameter_names":["self","other","alpha","out","workspaceSize","executor"],"parameter_types":["const aclTensor*","const aclTensor*","const aclScalar*","aclTensor*","uint64_t*","aclOpExecutor**"],"parameter_count":6}

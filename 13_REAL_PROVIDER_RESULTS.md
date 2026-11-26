@@ -43,3 +43,21 @@ WP1_REAL_PROVIDER        = PARTIAL
 ```
 
 No retry was made. A new authorization is required for additional real calls.
+
+## Follow-up retries
+
+```text
+U04: 2048 tokens -> PASS
+G02: 2048 tokens -> FAIL（JSON truncated; no complete quote/line fields）
+```
+
+Final real result:
+
+```text
+REAL_EV_PASS = 10 / 11
+FAILED = G02
+```
+
+Total HTTP attempts across all real phases: 20.
+
+No further retry was made.

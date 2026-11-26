@@ -30,7 +30,7 @@
     "blueprint.json": "5766b8b66fd2e9cd2ce48d2f84326ba0165ec416095524ee2e66db54f09efd84",
     "quality_gate_result.json": "930c1abeaefcf3e7bd05f7445281674024e8b469ca978b51ffb256377524f8e8",
     "review_results.jsonl": "b01ac1592079ee586f6eb1cb682a020a4267116432f1d0bd0a9b1ae9f0a2528e",
-    "tasks.jsonl": "f348df99b7d897ff21bd6b7181868b35ecf6e061e6965cac62a9ce97778943a0"
+    "tasks.jsonl": "75037d4bec94906871efb9fd9666af8fa1698643b1589a01e84305ec04da0e51"
   },
   "graders": [
     {

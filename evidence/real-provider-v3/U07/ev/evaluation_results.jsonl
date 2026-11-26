@@ -1,0 +1,1 @@
+{"diagnosis": "", "dimension_scores": {"apply": null, "discover": null, "ground_verify": null, "understand": 1.0}, "evidence_check": {"required": false, "supported": null}, "failure_reason_code": null, "failure_stage": null, "run_id": "wp1-real3-u07", "schema_version": "0.1", "task_id": "task_wp1_u07", "verdict": "pass"}

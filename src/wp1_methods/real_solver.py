@@ -24,7 +24,7 @@ def prompt(spec, asset, *, source_uri, extra_context=None):
 
 def solve(spec, asset, out_dir, extra_context=None):
     key=_key(); out=Path(out_dir); out.mkdir(parents=True,exist_ok=True)
-    body={'model':'deepseek-flash','temperature':0,'max_tokens':256,
+    body={'model':'deepseek-flash','temperature':0,'max_tokens':2048,
           'messages':[{'role':'system','content':'Answer from the frozen CANN asset. Return strict JSON only.'},
                       {'role':'user','content':prompt(spec,asset,source_uri=asset['source']['uri'],extra_context=extra_context)}]}
     raw=json.dumps(body,ensure_ascii=False,sort_keys=True).encode()

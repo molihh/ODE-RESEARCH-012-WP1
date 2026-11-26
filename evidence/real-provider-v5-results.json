@@ -1,0 +1,83 @@
+[
+  {
+    "method_id": "U04",
+    "http_status": 200,
+    "returned_model": "deepseek-flash",
+    "usage": {
+      "prompt_tokens": 9553,
+      "completion_tokens": 212,
+      "total_tokens": 9765,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 167
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 9553
+    },
+    "actual_ev": "pass",
+    "replay": true,
+    "report": true,
+    "answer": {
+      "parameter_names": [
+        "workspace",
+        "workspaceSize",
+        "executor",
+        "stream"
+      ],
+      "parameter_types": [
+        "void*",
+        "uint64_t",
+        "aclOpExecutor*",
+        "aclrtStream"
+      ],
+      "parameter_count": 4
+    },
+    "expected": {
+      "parameter_names": [
+        "workspace",
+        "workspaceSize",
+        "executor",
+        "stream"
+      ],
+      "parameter_types": [
+        "void*",
+        "uint64_t",
+        "aclOpExecutor*",
+        "aclrtStream"
+      ],
+      "parameter_count": 4
+    }
+  },
+  {
+    "method_id": "G02",
+    "http_status": 200,
+    "returned_model": "deepseek-flash",
+    "usage": {
+      "prompt_tokens": 9539,
+      "completion_tokens": 2048,
+      "total_tokens": 11587,
+      "prompt_tokens_details": {
+        "cached_tokens": 9344
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 2013
+      },
+      "prompt_cache_hit_tokens": 9344,
+      "prompt_cache_miss_tokens": 195
+    },
+    "actual_ev": "fail",
+    "replay": true,
+    "report": true,
+    "answer": {
+      "_raw": "{\"source_uri\":\"https://raw.gitcode.com/cann/ops-math/raw/9.2.0/math/add/docs/aclnnAdd&"
+    },
+    "expected": {
+      "source_uri": "https://raw.gitcode.com/cann/ops-math/raw/9.2.0/math/add/docs/aclnnAdd&aclnnInplaceAdd.md",
+      "start_line": 1,
+      "end_line": 1,
+      "quote": "# aclnnAdd&aclnnInplaceAdd"
+    }
+  }
+]

@@ -1,0 +1,1 @@
+{"parameter_names":["workspace","workspaceSize","executor","stream"],"parameter_types":["void*","uint64_t","aclOpExecutor*","aclrtStream"],"parameter_count":4}

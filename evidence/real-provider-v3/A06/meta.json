@@ -1,0 +1,21 @@
+{
+  "http_status": 200,
+  "model": "deepseek-flash",
+  "usage": {
+    "prompt_tokens": 9532,
+    "completion_tokens": 304,
+    "total_tokens": 9836,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 288
+    },
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 9532
+  },
+  "request_sha256": "663e2518155ced1fef0969a3b81b596a89210aba96a7a499c7eb4473e18a37b7",
+  "response_sha256": "6a46c149e7ba9bcc7fbe714490224d362250134eb97ee55fef1178cb50bf8bf1",
+  "elapsed_seconds": 2.921,
+  "request_id": null
+}

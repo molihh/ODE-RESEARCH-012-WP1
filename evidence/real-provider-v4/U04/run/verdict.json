@@ -1,0 +1,10 @@
+{
+  "matched": [],
+  "required": [
+    "parameter_count",
+    "parameter_names",
+    "parameter_types"
+  ],
+  "score": 0.0,
+  "verdict": "FAIL"
+}

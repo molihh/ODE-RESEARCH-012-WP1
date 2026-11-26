@@ -1,0 +1,11 @@
+{
+  "matched": [],
+  "required": [
+    "end_line",
+    "quote",
+    "source_uri",
+    "start_line"
+  ],
+  "score": 0.0,
+  "verdict": "FAIL"
+}
