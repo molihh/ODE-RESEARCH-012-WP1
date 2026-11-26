@@ -1,0 +1,13 @@
+{
+  "matched": [
+    "consistent",
+    "source_count"
+  ],
+  "required": [
+    "canonical_name",
+    "consistent",
+    "source_count"
+  ],
+  "score": 0.6666666666666666,
+  "verdict": "FAIL"
+}

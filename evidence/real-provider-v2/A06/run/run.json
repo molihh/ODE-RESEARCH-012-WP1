@@ -1,0 +1,18 @@
+{
+  "binding_sha256": "f3ec88a18be287c6346a858cae8b7aed268164c44e10710f3c1dd46f260ff939",
+  "network_calls": 0,
+  "oracle_hash": "4e406645824c0568bb697df7fde0f9a90e2b96bbb82b58cb23eff31428b76e36",
+  "oracle_id": "oracle_A06_wp1",
+  "oracle_mode": "B",
+  "provider_calls": 0,
+  "run_id": "run",
+  "verdict": {
+    "matched": [],
+    "required": [
+      "compatible",
+      "target_version"
+    ],
+    "score": 0.0,
+    "verdict": "FAIL"
+  }
+}

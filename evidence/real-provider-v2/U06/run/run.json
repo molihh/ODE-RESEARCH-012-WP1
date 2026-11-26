@@ -1,0 +1,21 @@
+{
+  "binding_sha256": "7ec32e25c2ae311e77ab79b515618a7ba5e4ea787b771f2ffc1e7da0d64c15fa",
+  "network_calls": 0,
+  "oracle_hash": "c526cc5899ad5041a685a3bcd787fd702be4456ddff52f493afda78ae9b1227e",
+  "oracle_id": "oracle_U06_wp1",
+  "oracle_mode": "B",
+  "provider_calls": 0,
+  "run_id": "run",
+  "verdict": {
+    "matched": [
+      "base_api",
+      "inplace_api"
+    ],
+    "required": [
+      "base_api",
+      "inplace_api"
+    ],
+    "score": 1.0,
+    "verdict": "PASS"
+  }
+}

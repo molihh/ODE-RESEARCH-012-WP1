@@ -1,0 +1,12 @@
+{
+  "matched": [
+    "base_api",
+    "inplace_api"
+  ],
+  "required": [
+    "base_api",
+    "inplace_api"
+  ],
+  "score": 1.0,
+  "verdict": "PASS"
+}

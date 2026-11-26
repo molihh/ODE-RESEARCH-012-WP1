@@ -32,6 +32,11 @@
     "engineering_evidence"
   ],
   "positive_and_negative_cases": "PASS",
-  "wp1_expand_final": "PASS",
-  "unified_runner": "PASS"
+  "wp1_expand_final": "PARTIAL",
+  "unified_runner": "PASS",
+  "real_provider_validation": "PARTIAL_6_OF_11",
+  "real_provider_requests": 12,
+  "real_provider_calls_valid": 11,
+  "real_provider_retries": 0,
+  "offline_method_chain": "PASS"
 }

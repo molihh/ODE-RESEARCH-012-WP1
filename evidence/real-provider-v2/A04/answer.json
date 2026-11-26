@@ -1,0 +1,6 @@
+{
+  "workspace": "workspace",
+  "workspace_size": "workspaceSize",
+  "executor": "executor",
+  "stream": "stream"
+}

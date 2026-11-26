@@ -1,0 +1,9 @@
+{
+  "http_status": 401,
+  "model": null,
+  "usage": {},
+  "request_sha256": "7daa206b849fddf4cb7fad3074f772d66ba76ec6cc6f5ab9ecf51f5c664e24f6",
+  "response_sha256": "690a503dfc367543bc587aa62c0f82ff79b358add24af6e98a80ba0c215658b3",
+  "elapsed_seconds": 0.495,
+  "request_id": null
+}

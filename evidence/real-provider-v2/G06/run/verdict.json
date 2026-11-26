@@ -1,0 +1,12 @@
+{
+  "matched": [
+    "source_uri",
+    "source_version"
+  ],
+  "required": [
+    "source_uri",
+    "source_version"
+  ],
+  "score": 1.0,
+  "verdict": "PASS"
+}
