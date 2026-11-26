@@ -1,0 +1,10 @@
+{
+  "matched": [
+    "workspace_api"
+  ],
+  "required": [
+    "workspace_api"
+  ],
+  "score": 1.0,
+  "verdict": "PASS"
+}

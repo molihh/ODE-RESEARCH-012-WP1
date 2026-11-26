@@ -1,7 +1,7 @@
 {
   "approval_ref": "WP2-DSH-002",
-  "approved_at": "2026-11-26T07:24:39.491510+00:00",
-  "binding_sha256": "2e58396851ece676e9fb43e16ca162844c9fb61ff0b7b949b4cbd92cf761d2b5",
+  "approved_at": "2026-11-26T07:42:46.816100+00:00",
+  "binding_sha256": "e7b8f368dae833dbc9ca84b6fe2e628da01eb1c157908dcc4bf060559202455d",
   "compatibility": {
     "reason": "WP2 runtime integration",
     "status": "PASS"

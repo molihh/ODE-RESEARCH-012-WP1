@@ -1,0 +1,16 @@
+{
+  "matched": [
+    "end_line",
+    "quote",
+    "source_uri",
+    "start_line"
+  ],
+  "required": [
+    "end_line",
+    "quote",
+    "source_uri",
+    "start_line"
+  ],
+  "score": 1.0,
+  "verdict": "PASS"
+}

@@ -1,0 +1,222 @@
+{
+  "schema_version": "wp1.unified-method-chain/1",
+  "selected": [
+    "U04",
+    "U05",
+    "U06",
+    "A04",
+    "G06",
+    "G02",
+    "U07",
+    "A06",
+    "D04",
+    "U10",
+    "D07"
+  ],
+  "excluded": [],
+  "records": [
+    {
+      "method_id": "U04",
+      "stage": "ALL",
+      "oracle_hash": "0668d4047614e37cad04b6c366cbc2b4b9ea5488128c87316baef0746aed85fe",
+      "binding": "f065cf41f26a9aa677e4d0bfb0d8caeccf7f41d91dafffd261365751bd609a9c",
+      "actual_ev": "pass",
+      "replay": true,
+      "report": true,
+      "provider_calls": 0,
+      "status": "PASS"
+    },
+    {
+      "method_id": "U05",
+      "stage": "ALL",
+      "oracle_hash": "f65d19932d55fbb835eef89a5b35391e7dc3930dc05b2722e309766ff07c7852",
+      "binding": "764021d3eb0066b5d1e82ddf6628585a775045bf6298cea9080c6bf0452b2660",
+      "actual_ev": "pass",
+      "replay": true,
+      "report": true,
+      "provider_calls": 0,
+      "status": "PASS"
+    },
+    {
+      "method_id": "U06",
+      "stage": "ALL",
+      "oracle_hash": "c526cc5899ad5041a685a3bcd787fd702be4456ddff52f493afda78ae9b1227e",
+      "binding": "9f8f6e5f476d78c51ced95bcf9466bdf4d4128c6aafd6c82c80d3cb858c450c8",
+      "actual_ev": "pass",
+      "replay": true,
+      "report": true,
+      "provider_calls": 0,
+      "status": "PASS"
+    },
+    {
+      "method_id": "A04",
+      "stage": "ALL",
+      "oracle_hash": "ba538a4d7841089db32d8332fc5a27ace615a18dda4f1895e0ee27051337602b",
+      "binding": "07618ac2abafbc989abcd1ea8307ed083d83a978636e155bcad869a15c352b24",
+      "actual_ev": "pass",
+      "replay": true,
+      "report": true,
+      "provider_calls": 0,
+      "status": "PASS"
+    },
+    {
+      "method_id": "G06",
+      "stage": "ALL",
+      "oracle_hash": "483a9577ede0e83f9d389ee9bf57d9205cfeffb71098245220ee6a60019d87d6",
+      "binding": "5f8aece36165d8931c7f336b6c8aebd1eb9fd9ab0f109b8773ea3b83e48cac30",
+      "actual_ev": "pass",
+      "replay": true,
+      "report": true,
+      "provider_calls": 0,
+      "status": "PASS"
+    },
+    {
+      "method_id": "G02",
+      "stage": "ALL",
+      "oracle_hash": "b7815b093a7e6e82e281ae7ddfc7c45fb02456b8689732ad467d53eec96cdf1d",
+      "binding": "62d40afe731a1e892a4a9936e709667015ca61959ac1162d73493afdf12dd82d",
+      "actual_ev": "pass",
+      "replay": true,
+      "report": true,
+      "provider_calls": 0,
+      "status": "PASS"
+    },
+    {
+      "method_id": "U07",
+      "stage": "ALL",
+      "oracle_hash": "4b0f2e342a5e18528c40e5df8bcd25a1d928826ca9167e088a2de5f4589da1ea",
+      "binding": "e68aa0ea16314f215b153aecaec1897b9bbc5b6308ab2bc7f09a6990ff44ee78",
+      "actual_ev": "pass",
+      "replay": true,
+      "report": true,
+      "provider_calls": 0,
+      "status": "PASS"
+    },
+    {
+      "method_id": "A06",
+      "stage": "ALL",
+      "oracle_hash": "4e406645824c0568bb697df7fde0f9a90e2b96bbb82b58cb23eff31428b76e36",
+      "binding": "1a1b3d11997e547496b20aad8722d27e21996102e2f0bc13ce362e4b55025b43",
+      "actual_ev": "pass",
+      "replay": true,
+      "report": true,
+      "provider_calls": 0,
+      "status": "PASS"
+    },
+    {
+      "method_id": "D04",
+      "stage": "ALL",
+      "oracle_hash": "a98207cc6ea986eeb75996cf5df38ad8f22dbd4c8c214d02d55b33868b6da0da",
+      "binding": "9ff111388d9bf4f3ca09e0668009b717ad6214e25159c0de83a17d260897a374",
+      "actual_ev": "pass",
+      "replay": true,
+      "report": true,
+      "provider_calls": 0,
+      "status": "PASS"
+    },
+    {
+      "method_id": "U10",
+      "stage": "ALL",
+      "oracle_hash": "b405b566bcade65713a965e6667f9de91234bfc2b34a8d27d435d6dffe2c6a1b",
+      "binding": "6937ab20b07eb9b21ce587d01c81f3a206760d45712a7797f70bbdbd1131d2bd",
+      "actual_ev": "pass",
+      "replay": true,
+      "report": true,
+      "provider_calls": 0,
+      "status": "PASS"
+    },
+    {
+      "method_id": "D07",
+      "stage": "ALL",
+      "oracle_hash": "d1e2d7aa80d12b41f590e7b68fd830d0505c27217601f1bf1c4cf183f43087fe",
+      "binding": "8aa895c5481c87fc5e20b83bf7dc04137b5b5b008e0c9bc3480829c99fcb851e",
+      "actual_ev": "pass",
+      "replay": true,
+      "report": true,
+      "provider_calls": 0,
+      "status": "PASS"
+    }
+  ],
+  "trace": [
+    {
+      "seq": 1,
+      "method_id": "U04",
+      "action": "method_chain_completed",
+      "status": "PASS",
+      "oracle_hash": "0668d4047614e37cad04b6c366cbc2b4b9ea5488128c87316baef0746aed85fe"
+    },
+    {
+      "seq": 2,
+      "method_id": "U05",
+      "action": "method_chain_completed",
+      "status": "PASS",
+      "oracle_hash": "f65d19932d55fbb835eef89a5b35391e7dc3930dc05b2722e309766ff07c7852"
+    },
+    {
+      "seq": 3,
+      "method_id": "U06",
+      "action": "method_chain_completed",
+      "status": "PASS",
+      "oracle_hash": "c526cc5899ad5041a685a3bcd787fd702be4456ddff52f493afda78ae9b1227e"
+    },
+    {
+      "seq": 4,
+      "method_id": "A04",
+      "action": "method_chain_completed",
+      "status": "PASS",
+      "oracle_hash": "ba538a4d7841089db32d8332fc5a27ace615a18dda4f1895e0ee27051337602b"
+    },
+    {
+      "seq": 5,
+      "method_id": "G06",
+      "action": "method_chain_completed",
+      "status": "PASS",
+      "oracle_hash": "483a9577ede0e83f9d389ee9bf57d9205cfeffb71098245220ee6a60019d87d6"
+    },
+    {
+      "seq": 6,
+      "method_id": "G02",
+      "action": "method_chain_completed",
+      "status": "PASS",
+      "oracle_hash": "b7815b093a7e6e82e281ae7ddfc7c45fb02456b8689732ad467d53eec96cdf1d"
+    },
+    {
+      "seq": 7,
+      "method_id": "U07",
+      "action": "method_chain_completed",
+      "status": "PASS",
+      "oracle_hash": "4b0f2e342a5e18528c40e5df8bcd25a1d928826ca9167e088a2de5f4589da1ea"
+    },
+    {
+      "seq": 8,
+      "method_id": "A06",
+      "action": "method_chain_completed",
+      "status": "PASS",
+      "oracle_hash": "4e406645824c0568bb697df7fde0f9a90e2b96bbb82b58cb23eff31428b76e36"
+    },
+    {
+      "seq": 9,
+      "method_id": "D04",
+      "action": "method_chain_completed",
+      "status": "PASS",
+      "oracle_hash": "a98207cc6ea986eeb75996cf5df38ad8f22dbd4c8c214d02d55b33868b6da0da"
+    },
+    {
+      "seq": 10,
+      "method_id": "U10",
+      "action": "method_chain_completed",
+      "status": "PASS",
+      "oracle_hash": "b405b566bcade65713a965e6667f9de91234bfc2b34a8d27d435d6dffe2c6a1b"
+    },
+    {
+      "seq": 11,
+      "method_id": "D07",
+      "action": "method_chain_completed",
+      "status": "PASS",
+      "oracle_hash": "d1e2d7aa80d12b41f590e7b68fd830d0505c27217601f1bf1c4cf183f43087fe"
+    }
+  ],
+  "validated": 11,
+  "provider_calls": 0,
+  "network_calls": 0
+}

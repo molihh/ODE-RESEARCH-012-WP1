@@ -1,0 +1,21 @@
+{
+  "binding_sha256": "9ff111388d9bf4f3ca09e0668009b717ad6214e25159c0de83a17d260897a374",
+  "network_calls": 0,
+  "oracle_hash": "a98207cc6ea986eeb75996cf5df38ad8f22dbd4c8c214d02d55b33868b6da0da",
+  "oracle_id": "oracle_D04_wp1",
+  "oracle_mode": "B",
+  "provider_calls": 0,
+  "run_id": "D04",
+  "verdict": {
+    "matched": [
+      "api_count",
+      "api_kind"
+    ],
+    "required": [
+      "api_count",
+      "api_kind"
+    ],
+    "score": 1.0,
+    "verdict": "PASS"
+  }
+}

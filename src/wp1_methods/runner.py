@@ -4,15 +4,17 @@ import json, shutil
 from pathlib import Path
 from .specs import SPECS, select
 from .builder import build, task
+from wp2_runtime.symbol_builder import SymbolDeterministicBuilder
 from wp2_runtime import run_once, replay, rebuild_report
 from wp2_runtime.ev_adapter import trace, evaluate_with_ev
 from evaluator.suite import Suite
 from evaluator.preflight import validate_suite
 from ode_oracle_factory.model import sha
 
-def run_all(*, base, asset, identity, requested=None, output=None):
+def run_all(*, base, asset, identity, requested=None, output=None, v03_asset=None, v03_kb=None):
     base=Path(base); requested=requested or list(SPECS)
-    selected, excluded = select(requested, asset_type='api')
+    selected, excluded = select([m for m in requested if m != 'D07'], asset_type='api')
+    if 'D07' in requested: selected.append(SPECS['D07'])
     out=Path(output) if output else base/'unified'; shutil.rmtree(out,ignore_errors=True); out.mkdir(parents=True)
     records=[]; trace_events=[]
     for spec in selected:
@@ -20,13 +22,20 @@ def run_all(*, base, asset, identity, requested=None, output=None):
         pre=validate_suite(suite)
         if pre['status']!='READY':
             records.append({'method_id':mid,'status':'BLOCKED','reason':'PREFLIGHT_BLOCKED'}); continue
-        env=build(spec,asset,identity); flat=task(spec,asset)
-        run_dir=out/mid; rec=run_once(run_dir=run_dir,envelope=env,task=flat,asset=asset,answer=env.claims,
+        if mid == "D07":
+            if v03_asset is None or v03_kb is None:
+                records.append({'method_id':mid,'status':'NOT_VERIFIED','reason':'V03_ASSET_NOT_SUPPLIED'}); continue
+            flat=json.loads((suite/'tasks.jsonl').read_text().splitlines()[0])
+            env=SymbolDeterministicBuilder().build(flat,v03_asset,v03_kb)
+            use_asset=v03_asset
+        else:
+            env=build(spec,asset,identity); flat=task(spec,asset); use_asset=asset
+        run_dir=out/mid; rec=run_once(run_dir=run_dir,envelope=env,task=flat,asset=use_asset,answer=env.claims,
             output_schema_sha256='c'*64,grader_config={'type':'structured_match','version':'0.1','required_fields':list(spec.expected_fields)})
         rep=replay(run_dir); reb=rebuild_report(run_dir)
         m=json.loads((suite/'suite_manifest.json').read_text()); mh=Suite(suite).manifest_hash
         evdir=run_dir/'ev'; tr=trace(env,env.claims,None,run_id=f'wp1-{mid.lower()}',task_id=flat['task_id'],
-            suite_id=m['suite_id'],asset_sha=asset['content']['sha256'],manifest_sha=mh)
+            suite_id=m['suite_id'],asset_sha=use_asset['content']['sha256'],manifest_sha=mh)
         (run_dir/'traces.jsonl').write_text(json.dumps(tr)+'\n')
         evrows,summ=evaluate_with_ev(suite,run_dir/'traces.jsonl',evdir)
         event={'method_id':mid,'stage':'ALL','oracle_hash':env.content_hash,'binding':rec['binding_sha256'],

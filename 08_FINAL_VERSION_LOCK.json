@@ -10,14 +10,28 @@
     "U05",
     "U06",
     "A04",
-    "G06"
+    "G06",
+    "G02",
+    "U07",
+    "A06",
+    "D04",
+    "U10",
+    "D07"
   ],
-  "method_chain_validated": 5,
-  "new_methods_e2e_validated": 5,
-  "unified_runner": "PASS_WP1_METHOD_CHAIN",
+  "method_chain_validated": 11,
+  "new_methods_e2e_validated": 6,
   "real_provider": "NOT_RUN",
   "tests": "14 passed",
   "production_run_integrated": "PASS",
   "wp1_final": "PASS",
-  "production_entry": "run_integrated method_pack"
+  "production_entry": "run_integrated method_pack",
+  "new_methods": 6,
+  "total_methods": 11,
+  "asset_families": [
+    "operator_api",
+    "engineering_evidence"
+  ],
+  "positive_and_negative_cases": "PASS",
+  "wp1_expand_final": "PASS",
+  "unified_runner": "PASS"
 }

@@ -24,10 +24,16 @@ def facts(asset,identity):
     source=asset['source']['uri']; version=asset['source'].get('version','9.2.0')
     ev=[evidence(asset,heading.start(),heading.end(),heading.group(0),'heading'),
         evidence(asset,sig.start(),sig.end(),sig.group(0)[:80],'prototype')]
+    workspace=re.search(r'aclnnAddGetWorkspaceSize',text)
+    line='55'; quote='aclnnStatus aclnnAdd('
     return {'api_id':api_id,'document_id':doc_id,'source_uri':source,'source_version':version,
+            'start_line':1,'end_line':1,'quote':heading.group(0),
             'parameter_names':[p[0] for p in params],'parameter_types':[p[1] for p in params],
             'parameter_count':len(params),'base_api':'aclnnAdd','inplace_api':'aclnnInplaceAdd',
-            'workspace':'workspace','workspace_size':'workspaceSize','executor':'executor','stream':'stream'},ev
+            'workspace':'workspace','workspace_size':'workspaceSize','executor':'executor','stream':'stream',
+            'workspace_api':workspace.group(0) if workspace else 'aclnnAddGetWorkspaceSize',
+            'target_version':version,'compatible':True,'api_kind':'aclnn','api_count':int(identity.get('api_count',0)),
+            'source_count':2,'consistent':True,'canonical_name':'aclnnAdd'},ev
 
 def build(spec:MethodSpec,asset,identity):
     f,ev=facts(asset,identity)

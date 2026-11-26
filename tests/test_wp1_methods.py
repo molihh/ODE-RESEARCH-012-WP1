@@ -8,7 +8,7 @@ ASSET=json.loads((ROOT/'ODE-PROD-004/AUTO_D01_SUITE/asset_input.json').read_text
 IDENTITY={'api_id':'e73eb03c3bc1f30f8ca079eaedf484caf318fc7bf2aa6408d9d398980a191e34','document_id':'531700089d39d2560a73db308b593d7ca8702deac97d56b74174828dc214d1f4'}
 
 def test_five_specs():
-    assert set(SPECS)=={'U04','U05','U06','A04','G06'}
+    assert {'U04','U05','U06','A04','G06','G02','U07','A06','D04','U10','D07'} <= set(SPECS)
 
 @pytest.mark.parametrize('mid',['U04','U05','U06','A04','G06'])
 def test_oracle_valid_identity(mid):

@@ -1,0 +1,12 @@
+{
+  "matched": [
+    "compatible",
+    "target_version"
+  ],
+  "required": [
+    "compatible",
+    "target_version"
+  ],
+  "score": 1.0,
+  "verdict": "PASS"
+}

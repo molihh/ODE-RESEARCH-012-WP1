@@ -1,0 +1,74 @@
+{
+  "asset_sha256": "8878a5f15e148d363a6a2baa8ae78efaea5e49373c530b0f9b4784979e65f9c6",
+  "evidence": [
+    {
+      "evidence_id": "47e5ec0b0f4f:heading:0",
+      "kind": "heading",
+      "locator": "chars:0:10",
+      "quote": "# aclnnAdd",
+      "source_sha256": "8878a5f15e148d363a6a2baa8ae78efaea5e49373c530b0f9b4784979e65f9c6",
+      "source_uri": "https://raw.gitcode.com/cann/ops-math/raw/9.2.0/math/add/docs/aclnnAdd&aclnnInplaceAdd.md"
+    },
+    {
+      "evidence_id": "47e5ec0b0f4f:prototype:1228",
+      "kind": "prototype",
+      "locator": "chars:1228:1371",
+      "quote": "  aclnnStatus aclnnAdd(\n    void*          workspace,\n    uint64_t       workspa",
+      "source_sha256": "8878a5f15e148d363a6a2baa8ae78efaea5e49373c530b0f9b4784979e65f9c6",
+      "source_uri": "https://raw.gitcode.com/cann/ops-math/raw/9.2.0/math/add/docs/aclnnAdd&aclnnInplaceAdd.md"
+    }
+  ],
+  "oracle_public": {
+    "asset_id": "47e5ec0b0f4f5d80827aeaebee5a86275a0544cb8a93eeb5ebcc2d66bc8c7549",
+    "asset_sha256": "8878a5f15e148d363a6a2baa8ae78efaea5e49373c530b0f9b4784979e65f9c6",
+    "asset_version": "9.2.0",
+    "claims_sha256": "e244baec6094caf3807a96b883d9c00e695aee78e6b8fcc99d3778f2c214c6a0",
+    "constraints": [],
+    "construction_strategy": "DETERMINISTIC_WP1",
+    "content_hash": "ba538a4d7841089db32d8332fc5a27ace615a18dda4f1895e0ee27051337602b",
+    "evidence": [
+      {
+        "evidence_id": "47e5ec0b0f4f:heading:0",
+        "kind": "heading",
+        "locator": "chars:0:10",
+        "quote": "# aclnnAdd",
+        "source_sha256": "8878a5f15e148d363a6a2baa8ae78efaea5e49373c530b0f9b4784979e65f9c6",
+        "source_uri": "https://raw.gitcode.com/cann/ops-math/raw/9.2.0/math/add/docs/aclnnAdd&aclnnInplaceAdd.md"
+      },
+      {
+        "evidence_id": "47e5ec0b0f4f:prototype:1228",
+        "kind": "prototype",
+        "locator": "chars:1228:1371",
+        "quote": "  aclnnStatus aclnnAdd(\n    void*          workspace,\n    uint64_t       workspa",
+        "source_sha256": "8878a5f15e148d363a6a2baa8ae78efaea5e49373c530b0f9b4784979e65f9c6",
+        "source_uri": "https://raw.gitcode.com/cann/ops-math/raw/9.2.0/math/add/docs/aclnnAdd&aclnnInplaceAdd.md"
+      }
+    ],
+    "independence": {
+      "agent_answer_used": false,
+      "ev_verdict_used": false,
+      "grader_used_for_claims": false
+    },
+    "method_id": "A04",
+    "oracle_id": "oracle_A04_wp1",
+    "oracle_mode": "B",
+    "oracle_version": "1.0.0",
+    "provenance": {
+      "asset_source": "https://raw.gitcode.com/cann/ops-math/raw/9.2.0/math/add/docs/aclnnAdd&aclnnInplaceAdd.md",
+      "builder": "wp1-method-builder",
+      "method": "A04"
+    },
+    "schema_version": "ode.oracle-envelope/1",
+    "status": "VALID",
+    "task_id": "task_wp1_a04",
+    "task_type": "auto_d06",
+    "validation": {}
+  },
+  "task": {
+    "asset_id": "47e5ec0b0f4f5d80827aeaebee5a86275a0544cb8a93eeb5ebcc2d66bc8c7549",
+    "method_id": "A04",
+    "prompt": "给出调用该 API 时 workspace、workspaceSize、executor、stream 对应的参数名。",
+    "task_id": "task_wp1_a04",
+    "task_type": "auto_d06"
+  }
+}

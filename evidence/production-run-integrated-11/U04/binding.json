@@ -1,0 +1,32 @@
+{
+  "approval_ref": "WP2-DSH-002",
+  "approved_at": "2026-11-26T07:41:21.649677+00:00",
+  "binding_sha256": "f065cf41f26a9aa677e4d0bfb0d8caeccf7f41d91dafffd261365751bd609a9c",
+  "compatibility": {
+    "reason": "WP2 runtime integration",
+    "status": "PASS"
+  },
+  "grader": {
+    "config_sha256": "3a3c7e79640859811f792c6cd12820000117ff6c0e2bdd5f070802ef1288b869",
+    "manifest_sha256": "3a3c7e79640859811f792c6cd12820000117ff6c0e2bdd5f070802ef1288b869",
+    "registry_version": "1.0",
+    "type": "structured_match",
+    "version": "0.1"
+  },
+  "method": {
+    "descriptor_sha256": "83d63601ccd818b4c888501474d3eb581a585671281f166aeecd10c92b461b69",
+    "method_id": "U04",
+    "method_version": "1.0.0"
+  },
+  "oracle": {
+    "artifact_id": "oracle_U04_wp1",
+    "frozen": true,
+    "independent_approval": true,
+    "route_id": "O1",
+    "sha256": "0668d4047614e37cad04b6c366cbc2b4b9ea5488128c87316baef0746aed85fe",
+    "version": "1.0.0"
+  },
+  "output_schema_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+  "schema_version": "ode.evaluation-binding/1",
+  "task_type": "auto_d06"
+}

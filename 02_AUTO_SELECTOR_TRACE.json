@@ -1,12 +1,16 @@
 {
   "schema_version": "wp1.auto-selector-trace/1",
-  "asset_family": "operator_api",
   "requested": [
     "U04",
     "U05",
     "U06",
     "A04",
     "G06",
+    "G02",
+    "U07",
+    "A06",
+    "D04",
+    "U10",
     "D07",
     "D99"
   ],
@@ -15,18 +19,24 @@
     "U05",
     "U06",
     "A04",
-    "G06"
+    "G06",
+    "G02",
+    "U07",
+    "A06",
+    "D04",
+    "U10",
+    "D07"
   ],
   "excluded": [
-    {
-      "method_id": "D07",
-      "reason": "ASSET_TYPE_MISMATCH"
-    },
     {
       "method_id": "D99",
       "reason": "NOT_REGISTERED"
     }
   ],
-  "reason": "asset_family=operator_api; D07 requires engineering_evidence; D99 unregistered",
-  "version": "wp1-selector/1"
+  "asset_families": [
+    "operator_api",
+    "engineering_evidence"
+  ],
+  "reason": "D07 selected only for engineering_evidence; D99 unregistered",
+  "version": "wp1-selector/2"
 }

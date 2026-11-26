@@ -1,0 +1,16 @@
+{
+  "matched": [
+    "executor",
+    "stream",
+    "workspace",
+    "workspace_size"
+  ],
+  "required": [
+    "executor",
+    "stream",
+    "workspace",
+    "workspace_size"
+  ],
+  "score": 1.0,
+  "verdict": "PASS"
+}

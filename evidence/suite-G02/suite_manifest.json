@@ -1,0 +1,49 @@
+{
+  "schema_version": "0.1",
+  "suite_id": "suite_wp1_g02",
+  "suite_version": "0.1",
+  "profile": "ode-evaluator-0.1.0-draft.1",
+  "asset": {
+    "asset_id": "47e5ec0b0f4f5d80827aeaebee5a86275a0544cb8a93eeb5ebcc2d66bc8c7549",
+    "sha256": "8878a5f15e148d363a6a2baa8ae78efaea5e49373c530b0f9b4784979e65f9c6",
+    "source_uri": "https://raw.gitcode.com/cann/ops-math/raw/9.2.0/math/add/docs/aclnnAdd&aclnnInplaceAdd.md",
+    "source_version": "9.2.0"
+  },
+  "blueprint_id": "bp_wp1_g02",
+  "blueprint_version": "0.1",
+  "created_at": "2026-11-22T13:10:00.000000Z",
+  "designer": {
+    "model": "deepseek-flash",
+    "generation_config": {
+      "max_output_tokens": 8192,
+      "temperature": 0
+    },
+    "limitations": [
+      "Oracle canonical_name comes from the KB identity layer (primary_api), not the page heading."
+    ],
+    "prompt_version": "td-prompt/3.0"
+  },
+  "quality_gate_status": "passed",
+  "files": {
+    "answer_keys.jsonl": "49b18472c403c0b981aa3c58400c9eb907c855f8b158cf61dd384dec19236af3",
+    "asset_input.json": "47047a14261b8baedce4337162fa1b5a0f0bcfe15a4dc59236f9db01041b9a9b",
+    "blueprint.json": "05bad7ec87212b67f3539eac4e1ba5735b3fb7cda01a0ab4dff0ed796add26ca",
+    "quality_gate_result.json": "83072ee100c74e7147be294d4160464daeb49094c201518242132726961ae0b1",
+    "review_results.jsonl": "d24d17f0a00ed08b3572153b80c078102526fb2ab60aa368dbdbd2fde032d478",
+    "tasks.jsonl": "216a99080ea0b4744bfa52513968b4353ffbf65b199125d8307dca97a38bcbca"
+  },
+  "graders": [
+    {
+      "type": "structured_match",
+      "version": "0.1"
+    }
+  ],
+  "runtime_config": {
+    "dimension_aggregation": "all",
+    "task_type_graders": {
+      "auto_d06": [
+        "structured_match"
+      ]
+    }
+  }
+}

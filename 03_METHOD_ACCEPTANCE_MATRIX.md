@@ -1,15 +1,23 @@
-# WP1 Method Acceptance Matrix
+# WP1 Expansion Acceptance Matrix
 
-| Method | Oracle | Binding | Actual EV | Replay | Report | Unified WP1 Runner |
-|---|---|---|---|---|---|---|
-| U04 | VALID | PASS | pass | true | true | PASS |
-| U05 | VALID | PASS | pass | true | true | PASS |
-| U06 | VALID | PASS | pass | true | true | PASS |
-| A04 | VALID | PASS | pass | true | true | PASS |
-| G06 | VALID | PASS | pass | true | true | PASS |
+| Method | Asset family | Oracle | Binding | Actual EV | Negative | Replay | Report | Production run_integrated |
+|---|---|---|---|---|---|---|---|---|
+| U04 | operator_api | VALID | PASS | pass | fail（应拒绝/错误答案） | true | true | PASS |
+| U05 | operator_api | VALID | PASS | pass | fail（应拒绝/错误答案） | true | true | PASS |
+| U06 | operator_api | VALID | PASS | pass | fail（应拒绝/错误答案） | true | true | PASS |
+| A04 | operator_api | VALID | PASS | pass | fail（应拒绝/错误答案） | true | true | PASS |
+| G06 | operator_api | VALID | PASS | pass | fail（应拒绝/错误答案） | true | true | PASS |
+| G02 | operator_api | VALID | PASS | pass | fail（应拒绝/错误答案） | true | true | PASS |
+| U07 | operator_api | VALID | PASS | pass | fail（应拒绝/错误答案） | true | true | PASS |
+| A06 | operator_api | VALID | PASS | pass | fail（应拒绝/错误答案） | true | true | PASS |
+| D04 | operator_api | VALID | PASS | pass | fail（应拒绝/错误答案） | true | true | PASS |
+| U10 | operator_api | VALID | PASS | pass | fail（应拒绝/错误答案） | true | true | PASS |
+| D07 | engineering_evidence | VALID | PASS | pass | fail（应拒绝/错误答案） | true | true | PASS |
 
 ```text
-METHOD_CHAIN_VALIDATED = 5
-NEW_METHODS_E2E_VALIDATED = 5
+NEW_METHODS_E2E_VALIDATED = 6
+TOTAL_WP1_METHODS_VALIDATED = 11
+VALIDATED_ASSET_FAMILIES = 2
+PRODUCTION_RUN_INTEGRATED = PASS
+POSITIVE_AND_NEGATIVE_CASES = PASS
 ```
-The unified WP1 method-chain runner executes selector -> Oracle -> binding -> TE/EV -> trace -> replay/report. It is not the production `run_integrated`; that distinction is retained in limitations.

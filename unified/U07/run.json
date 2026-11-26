@@ -1,0 +1,19 @@
+{
+  "binding_sha256": "a1e60852e95c10378c5e9ba3546701b3dd60e74cacdccafc7e2b62993d354877",
+  "network_calls": 0,
+  "oracle_hash": "4b0f2e342a5e18528c40e5df8bcd25a1d928826ca9167e088a2de5f4589da1ea",
+  "oracle_id": "oracle_U07_wp1",
+  "oracle_mode": "B",
+  "provider_calls": 0,
+  "run_id": "U07",
+  "verdict": {
+    "matched": [
+      "workspace_api"
+    ],
+    "required": [
+      "workspace_api"
+    ],
+    "score": 1.0,
+    "verdict": "PASS"
+  }
+}
