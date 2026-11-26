@@ -1,0 +1,1 @@
+{"source_uri":"https://raw.gitcode.com/cann/ops-math/raw/9.2.0/math/add/docs/aclnnAdd&aclnnInplaceAdd.md","start_line":45,"end_line":51,"quote":"aclnnStatus aclnnAddGetWorkspaceSize(\n  const aclTensor* self,\n  const aclTensor* other,\n  const aclScalar* alpha,\n  aclTensor*       out,\n  uint64_t*        workspaceSize,\n  aclOpExecutor**  executor)"}

@@ -55,9 +55,9 @@ Final real result:
 
 ```text
 REAL_EV_PASS = 10 / 11
-FAILED = G02
+FAILED = G02（最终输出选择声明行 45–51，Gold 为 heading line 1）
 ```
 
-Total HTTP attempts across all real phases: 20.
+Total HTTP attempts across all real phases: 21（1×401 + 20×valid）.
 
 No further retry was made.
