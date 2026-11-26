@@ -31,11 +31,15 @@ SPECS = {
         ("source_uri","source_version")),
 }
 
+KNOWN_ASSET_TYPES = {"D07": "engineering_evidence"}
+
 def select(method_ids, asset_type="api"):
     selected=[]; excluded=[]
     for mid in method_ids:
         spec=SPECS.get(mid)
-        if spec is None: excluded.append({"method_id":mid,"reason":"NOT_REGISTERED"}); continue
+        if spec is None:
+            reason = "ASSET_TYPE_MISMATCH" if KNOWN_ASSET_TYPES.get(mid) not in (None, asset_type) else "NOT_REGISTERED"
+            excluded.append({"method_id":mid,"reason":reason}); continue
         if spec.asset_type != asset_type: excluded.append({"method_id":mid,"reason":"ASSET_TYPE_MISMATCH"}); continue
         selected.append(spec)
     return selected,excluded

@@ -20,7 +20,7 @@
   "excluded": [
     {
       "method_id": "D07",
-      "reason": "NOT_REGISTERED"
+      "reason": "ASSET_TYPE_MISMATCH"
     },
     {
       "method_id": "D99",
