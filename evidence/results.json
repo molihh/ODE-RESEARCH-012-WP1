@@ -1,0 +1,95 @@
+[
+  {
+    "method_id": "U04",
+    "preflight": "READY",
+    "oracle_status": "VALID",
+    "oracle_hash": "0668d4047614e37cad04b6c366cbc2b4b9ea5488128c87316baef0746aed85fe",
+    "binding": "a70ef12bffa513be89975a6211c251fa427409d1fa1c65e1101153472d24ad73",
+    "local_verdict": "PASS",
+    "actual_ev_verdict": "pass",
+    "replay": true,
+    "report_identical": true,
+    "provider_calls": 0,
+    "claims": {
+      "parameter_names": [
+        "workspace",
+        "workspaceSize",
+        "executor",
+        "stream"
+      ],
+      "parameter_types": [
+        "void*",
+        "uint64_t",
+        "aclOpExecutor*",
+        "aclrtStream"
+      ],
+      "parameter_count": 4
+    }
+  },
+  {
+    "method_id": "U05",
+    "preflight": "READY",
+    "oracle_status": "VALID",
+    "oracle_hash": "f65d19932d55fbb835eef89a5b35391e7dc3930dc05b2722e309766ff07c7852",
+    "binding": "a07375506525766eaa508395e0a051f9c069235d27a3b2f7efa4fdee385627e1",
+    "local_verdict": "PASS",
+    "actual_ev_verdict": "pass",
+    "replay": true,
+    "report_identical": true,
+    "provider_calls": 0,
+    "claims": {
+      "api_id": "e73eb03c3bc1f30f8ca079eaedf484caf318fc7bf2aa6408d9d398980a191e34",
+      "document_id": "531700089d39d2560a73db308b593d7ca8702deac97d56b74174828dc214d1f4"
+    }
+  },
+  {
+    "method_id": "U06",
+    "preflight": "READY",
+    "oracle_status": "VALID",
+    "oracle_hash": "c526cc5899ad5041a685a3bcd787fd702be4456ddff52f493afda78ae9b1227e",
+    "binding": "1eafaae0d06282355142251bc4f66e5d8b985300455a9318d6526aeb268f4675",
+    "local_verdict": "PASS",
+    "actual_ev_verdict": "pass",
+    "replay": true,
+    "report_identical": true,
+    "provider_calls": 0,
+    "claims": {
+      "base_api": "aclnnAdd",
+      "inplace_api": "aclnnInplaceAdd"
+    }
+  },
+  {
+    "method_id": "A04",
+    "preflight": "READY",
+    "oracle_status": "VALID",
+    "oracle_hash": "ba538a4d7841089db32d8332fc5a27ace615a18dda4f1895e0ee27051337602b",
+    "binding": "657cf2028a5ca0580c471473afa24cc2d8b7777ffaf65ed5ffea628e97d965ac",
+    "local_verdict": "PASS",
+    "actual_ev_verdict": "pass",
+    "replay": true,
+    "report_identical": true,
+    "provider_calls": 0,
+    "claims": {
+      "workspace": "workspace",
+      "workspace_size": "workspaceSize",
+      "executor": "executor",
+      "stream": "stream"
+    }
+  },
+  {
+    "method_id": "G06",
+    "preflight": "READY",
+    "oracle_status": "VALID",
+    "oracle_hash": "483a9577ede0e83f9d389ee9bf57d9205cfeffb71098245220ee6a60019d87d6",
+    "binding": "c1f29e8d58d5d9a7028fe7054c5599f34a75b12c3c1d0ebef14d2338d2d2dd88",
+    "local_verdict": "PASS",
+    "actual_ev_verdict": "pass",
+    "replay": true,
+    "report_identical": true,
+    "provider_calls": 0,
+    "claims": {
+      "source_uri": "https://raw.gitcode.com/cann/ops-math/raw/9.2.0/math/add/docs/aclnnAdd&aclnnInplaceAdd.md",
+      "source_version": "9.2.0"
+    }
+  }
+]

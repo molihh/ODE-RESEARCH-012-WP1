@@ -1,0 +1,25 @@
+{
+  "binding_sha256": "657cf2028a5ca0580c471473afa24cc2d8b7777ffaf65ed5ffea628e97d965ac",
+  "network_calls": 0,
+  "oracle_hash": "ba538a4d7841089db32d8332fc5a27ace615a18dda4f1895e0ee27051337602b",
+  "oracle_id": "oracle_A04_wp1",
+  "oracle_mode": "B",
+  "provider_calls": 0,
+  "run_id": "run-A04",
+  "verdict": {
+    "matched": [
+      "executor",
+      "stream",
+      "workspace",
+      "workspace_size"
+    ],
+    "required": [
+      "executor",
+      "stream",
+      "workspace",
+      "workspace_size"
+    ],
+    "score": 1.0,
+    "verdict": "PASS"
+  }
+}

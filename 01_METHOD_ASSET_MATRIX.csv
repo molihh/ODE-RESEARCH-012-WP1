@@ -1,0 +1,6 @@
+method_id,asset_family,target_kb,dimension,oracle_mode,grader,preflight,actual_ev,replay,report,method_chain_status,unified_runner
+U04,operator_api,v02,understand,B,structured_match,READY,pass,True,True,PASS,NOT_VERIFIED
+U05,operator_api,v02,understand,B,structured_match,READY,pass,True,True,PASS,NOT_VERIFIED
+U06,operator_api,v02,understand,B,structured_match,READY,pass,True,True,PASS,NOT_VERIFIED
+A04,operator_api,v02,apply,B,structured_match,READY,pass,True,True,PASS,NOT_VERIFIED
+G06,operator_api,v02,ground_verify,B,structured_match,READY,pass,True,True,PASS,NOT_VERIFIED
