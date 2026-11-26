@@ -1,0 +1,455 @@
+"""Versioned real-TE slot for the existing WP3 T1-T7 runner."""
+
+import json
+from pathlib import Path
+
+from .admission import admit
+from .evidence import digest
+from .policy import validate_policy
+from .transport import OneShotTransport
+from .runtime_binding import (
+    assert_provider_payload_public,
+    freeze_runtime_binding,
+    verify_runtime_binding,
+)
+
+VERSION = "ode.production.integrated-te/1"
+
+
+def validate_request_budget(config):
+    value = config.get("request_budget") or {}
+    expected = {
+        "max_total_tokens": 10000,
+        "max_cost_usd": 1.0,
+        "input_tokens": 7518,
+        "max_output_tokens": 512,
+        "peak_input_usd_per_million": 0.30,
+        "peak_output_usd_per_million": 1.20,
+    }
+    if any(value.get(key) != item for key, item in expected.items()):
+        raise ValueError("INTEGRATED_REQUEST_BUDGET_INVALID")
+    if not isinstance(value.get("expected_request_sha256"), str) or len(value["expected_request_sha256"]) != 64:
+        raise ValueError("INTEGRATED_REQUEST_SHA_MISSING")
+    if not isinstance(value.get("tokenizer_sha256"), str) or len(value["tokenizer_sha256"]) != 64:
+        raise ValueError("INTEGRATED_TOKENIZER_SHA_MISSING")
+    total = value["input_tokens"] + value["max_output_tokens"]
+    cost = (
+        value["input_tokens"] * value["peak_input_usd_per_million"]
+        + value["max_output_tokens"] * value["peak_output_usd_per_million"]
+    ) / 1_000_000
+    if total > value["max_total_tokens"] or cost > value["max_cost_usd"]:
+        raise ValueError("INTEGRATED_REQUEST_BUDGET_EXCEEDED")
+    return {**value, "computed_total_tokens": total, "computed_peak_cost_usd": cost}
+
+
+def verify_integrated_evidence(root, *, require_response=True):
+    """Verify the immutable raw exchange and one-shot ledger without a Provider."""
+    root = Path(root)
+    raw = root / "private" / "raw-provider"
+    request_bytes = (raw / "request.bin").read_bytes()
+    request = json.loads((raw / "request.json").read_text())
+    ledger = [
+        json.loads(line)
+        for line in (root / "usage-ledger.jsonl").read_text().splitlines()
+        if line
+    ]
+    reservations = [row for row in ledger if row.get("event") == "request_reserved"]
+    completions = [row for row in ledger if row.get("event") == "request_completed"]
+    if (
+        len(reservations) != 1
+        or len(completions) != 1
+        or reservations[0].get("request_id") != request.get("request_id")
+        or completions[0].get("request_id") != request.get("request_id")
+        or request.get("request_sha256") != digest(request_bytes)
+        or reservations[0].get("request_sha256") != digest(request_bytes)
+    ):
+        raise ValueError("INTEGRATED_RAW_REQUEST_OR_LEDGER_MISMATCH")
+    result = {
+        "version": VERSION,
+        "request_id": request["request_id"],
+        "request_sha256": digest(request_bytes),
+        "requests_reserved": 1,
+        "requests_completed": 1,
+        "provider_calls_during_verification": 0,
+    }
+    response_bin = raw / "response.bin"
+    response_json = raw / "response.json"
+    if require_response and not (response_bin.is_file() and response_json.is_file()):
+        raise ValueError("INTEGRATED_RAW_RESPONSE_MISSING")
+    if response_bin.is_file() or response_json.is_file():
+        if not (response_bin.is_file() and response_json.is_file()):
+            raise ValueError("INTEGRATED_RAW_RESPONSE_INCOMPLETE")
+        response_bytes = response_bin.read_bytes()
+        response = json.loads(response_json.read_text())
+        if (
+            response.get("request_id") != request["request_id"]
+            or response.get("response_sha256") != digest(response_bytes)
+            or response.get("http_status") != completions[0].get("http_status")
+        ):
+            raise ValueError("INTEGRATED_RAW_RESPONSE_MISMATCH")
+        result.update(
+            response_sha256=digest(response_bytes),
+            http_status=response["http_status"],
+            provider_request_id=response.get("provider_request_id"),
+        )
+    runtime = root / "work" / "private" / "runtime-contracts"
+    if runtime.is_dir():
+        from ..contract_snapshot.binding import semantic_hash
+        from .runtime_binding import verify_runtime_binding
+
+        schema = json.loads((runtime / "evaluation-binding.schema.json").read_text())
+        binding = json.loads((runtime / "evaluation-binding.json").read_text())
+        snapshot = {
+            "path": str(runtime / "evaluation-binding.json"),
+            "binding_sha256": binding["binding_sha256"],
+        }
+        verified = verify_runtime_binding(snapshot, schema)
+        result["runtime_binding"] = {
+            "status": "PASS",
+            "binding_sha256": verified["binding_sha256"],
+            "schema_sha256": semantic_hash(schema),
+            "provider_calls_during_verification": 0,
+        }
+    return result
+
+
+def authorization_bindings(config, admission):
+    binding = config["integrated_binding"]
+    provider = config["provider"]
+    contracts = config.get("runtime_contracts")
+    result = {
+        "run_id": config["run_id"],
+        "suite_id": binding["suite_id"],
+        "suite_identity_sha256": binding["suite_identity_sha256"],
+        "task_id": binding["task_id"],
+        "task_type": binding["task_type"],
+        "oracle_sha256": admission["oracle_sha256"],
+        "grader_sha256": admission["grader_sha256"],
+        "prompt_version": provider["prompt_version"],
+        "runtime_config_version": provider["runtime_config_version"],
+        "model": provider["model"],
+        "max_real_requests": 1,
+        "max_retries": 0,
+        "request_budget": validate_request_budget(config),
+    }
+    if contracts:
+        result.update(
+            method_descriptor_sha256=contracts["method_description"]["provenance"]["descriptor_sha256"],
+            asset_profile_sha256=contracts["asset_profile"]["profile_sha256"],
+            evaluation_binding_candidate_sha256=digest(
+                json.dumps(contracts["evaluation_binding"], ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode()
+            ),
+            evaluation_binding_schema_sha256=contracts["evaluation_binding_schema_sha256"],
+        )
+    return result
+
+
+def prepare_integrated(config):
+    """Admission-only preflight.  It never constructs a transport or sends."""
+    policy = validate_policy(config)
+    admission = admit(config["admission"])
+    if config.get("authorization", {}).get("bindings") != authorization_bindings(
+        config, admission
+    ):
+        raise ValueError("EXECUTE_AUTHORIZATION_BINDING_MISMATCH")
+    return {
+        "status": "PREPARED_PENDING_EXECUTION",
+        "version": VERSION,
+        "run_id": config["run_id"],
+        "provider": policy["provider"],
+        "model": policy["model"],
+        "max_real_requests": 1,
+        "max_retries": 0,
+        "fallback": False,
+        "cache": False,
+        "provider_calls": 0,
+        "request_budget": validate_request_budget(config),
+        "admission": admission,
+        "authorization_bindings": authorization_bindings(config, admission),
+    }
+
+
+class IntegratedProductionFactory:
+    """One shared transport/budget bound to one immutable unified Run."""
+
+    def __init__(self, config, *, transport=None, api_key=None):
+        self.config = config
+        self.policy = validate_policy(config)
+        self.admission = admit(config["admission"])
+        if config.get("authorization", {}).get("bindings") != authorization_bindings(
+            config, self.admission
+        ):
+            raise ValueError("EXECUTE_AUTHORIZATION_BINDING_MISMATCH")
+        self.transport = transport
+        self.api_key = api_key
+        self.route = None
+        self.created = 0
+        self.runtime_binding = None
+
+    def __call__(self, **binding):
+        self.created += 1
+        if self.created != 1:
+            raise ValueError("INTEGRATED_REAL_TE_REQUIRES_EXACTLY_ONE_TASK")
+        if binding["run_id"] != self.config["run_id"]:
+            raise ValueError("INTEGRATED_REAL_TE_RUN_ID_MISMATCH")
+        from ..wp3.suite_identity import frozen_suite_identity
+
+        identity = frozen_suite_identity(binding["frozen"])
+        task_id = binding["task"]["task_id"]
+        expected = self.config["integrated_binding"]
+        if (
+            identity["suite_id"] != expected["suite_id"]
+            or identity["identity_sha256"] != expected["suite_identity_sha256"]
+            or task_id != expected["task_id"]
+            or binding["task"].get("task_type") != expected["task_type"]
+            or binding["task"].get("task_type") != self.config["admission"]["task_type"]
+            or task_id != self.config["admission"]["task_id"]
+            or self.admission["oracle_sha256"] != expected["oracle_sha256"]
+            or self.admission["grader_sha256"] != expected["grader_sha256"]
+        ):
+            raise ValueError("INTEGRATED_REAL_TE_BINDING_MISMATCH")
+        if self.config.get("runtime_contracts"):
+            method = self.config["runtime_contracts"]["method_description"]
+            asset_profile = self.config["runtime_contracts"]["asset_profile"]
+            actual_asset = binding["asset"]
+            self.runtime_binding = freeze_runtime_binding(
+                self.config,
+                {
+                    "task_id": task_id,
+                    "task_type": binding["task"]["task_type"],
+                    "asset_id": actual_asset["asset_id"],
+                    "asset_version": actual_asset["source"]["version"],
+                    "asset_sha256": actual_asset["content"]["sha256"],
+                    "method_adapter_id": method["capability"]["adapter_id"],
+                    "output_schema_sha256": self.config["admission"]["output_schema_sha256"],
+                    "oracle_sha256": self.admission["oracle_sha256"],
+                    "grader_sha256": self.admission["grader_sha256"],
+                },
+                binding["root"],
+                binding["trace"],
+            )
+        if self.route is None:
+            self.route = OneShotTransport(
+                root=binding["root"], policy=self.policy, transport=self.transport
+            )
+        return IntegratedProductionSolver(
+            route=self.route,
+            policy=self.policy,
+            trace=binding["trace"],
+            task_id=binding["task_id"],
+            execution_id=binding["execution_id"],
+            execution_artifact_id=binding["execution_artifact_id"],
+            api_key=self.api_key,
+            request_budget=validate_request_budget(self.config),
+            enforce_budget=True,
+            runtime_binding=self.runtime_binding,
+            runtime_binding_schema=(
+                self.config["runtime_contracts"]["evaluation_binding_schema"]
+                if self.runtime_binding else None
+            ),
+            require_runtime_binding=self.config.get("profile") == "ODE_INTEGRATED_V1_RUNTIME_CONTRACTS",
+            fixture_transport=self.config.get("transport_mode") == "FAKE",
+        )
+
+
+class IntegratedProductionSolver:
+    name = "deepseek"
+
+    def __init__(self, *, route, policy, trace, task_id, execution_id, execution_artifact_id, api_key,
+                 request_budget=None, enforce_budget=False, runtime_binding=None,
+                 require_runtime_binding=False, runtime_binding_schema=None,
+                 fixture_transport=False):
+        self.route = route
+        self.policy = policy
+        self.trace = trace
+        self.task_id = task_id
+        self.execution_id = execution_id
+        self.execution_artifact_id = execution_artifact_id
+        self.api_key = api_key
+        self.request_budget = request_budget
+        self.enforce_budget = enforce_budget
+        self.runtime_binding = runtime_binding
+        self.require_runtime_binding = require_runtime_binding
+        self.runtime_binding_schema = runtime_binding_schema
+        self.fixture_transport = fixture_transport
+        self.raw = None
+        self.stats = None
+
+    def solve(self, payload, config):
+        if self.runtime_binding is None and self.require_runtime_binding:
+            raise ValueError("RUNTIME_BINDING_NOT_FROZEN")
+        if self.runtime_binding is not None:
+            frozen_binding = verify_runtime_binding(
+                self.runtime_binding, self.runtime_binding_schema,
+                expected={"task_type": self.runtime_binding.get("task_type", "auto_d06")},
+            )
+            self.trace.event(
+                "evaluation_binding_verified_for_te",
+                module="task-executor",
+                inputs=self.runtime_binding["artifact_ids"],
+                task_id=self.task_id,
+            )
+        assert_provider_payload_public(payload)
+        if config.provider != self.policy["provider"] or config.model != self.policy["model"]:
+            raise ValueError("INTEGRATED_REAL_TE_PROVIDER_CONFIG_MISMATCH")
+        request = {
+            "model": self.policy["model"],
+            "messages": [
+                {
+                    "role": "system",
+                    "content": (
+                        "Execute the frozen ODE task. Return only one JSON object with "
+                        "answer, evidence_ids and abstained fields."
+                    ),
+                },
+                {
+                    "role": "user",
+                    "content": json.dumps(payload, ensure_ascii=False, sort_keys=True),
+                },
+            ],
+            "temperature": 0,
+            "stream": False,
+            "max_tokens": 512,
+        }
+        request_bytes = json.dumps(
+            request, ensure_ascii=False, separators=(",", ":")
+        ).encode()
+        if self.enforce_budget:
+            budget = self.request_budget or {}
+            if request.get("max_tokens") != budget.get("max_output_tokens"):
+                raise ValueError("INTEGRATED_OUTPUT_TOKEN_CAP_MISMATCH")
+            if digest(request_bytes) != budget.get("expected_request_sha256"):
+                raise ValueError("INTEGRATED_PREFLIGHT_REQUEST_SHA_MISMATCH")
+        request_env = self.trace.write(
+            "te.provider-event",
+            {
+                "version": VERSION,
+                "phase": "REQUEST_PREPARED",
+                "request_sha256": digest(request_bytes),
+                "provider": self.policy["provider"],
+                "model": self.policy["model"],
+                "prompt_version": self.policy["prompt_version"],
+                "evaluation_binding_sha256": (
+                    self.runtime_binding["binding_sha256"] if self.runtime_binding else None
+                ),
+                "transport_mode": "FAKE" if self.fixture_transport else "REAL",
+            },
+            module="task-executor",
+            parents=[self.execution_artifact_id],
+            task_id=self.task_id,
+            execution_id=self.execution_id,
+            fixture=self.fixture_transport,
+        )
+        self.trace.event(
+            "provider_request",
+            module="task-executor",
+            outputs=[request_env["artifact_id"]],
+            task_id=self.task_id,
+        )
+        try:
+            response, request_id = self.route.post(request, api_key=self.api_key)
+            response_env = self.trace.write(
+                "te.provider-event",
+                {
+                    "version": VERSION,
+                    "phase": "RESPONSE_PERSISTED",
+                    "request_id": request_id,
+                    "provider_request_id": response.headers.get("x-request-id"),
+                    "http_status": response.status_code,
+                    "response_sha256": digest(response.content),
+                    "transport_mode": "FAKE" if self.fixture_transport else "REAL",
+                },
+                module="task-executor",
+                parents=[self.execution_artifact_id, request_env["artifact_id"]],
+                task_id=self.task_id,
+                execution_id=self.execution_id,
+                fixture=self.fixture_transport,
+            )
+            self.trace.event(
+                "provider_response",
+                module="task-executor",
+                inputs=[request_env["artifact_id"]],
+                outputs=[response_env["artifact_id"]],
+                status="PASS" if 200 <= response.status_code < 300 else "FAIL",
+                task_id=self.task_id,
+            )
+            if not 200 <= response.status_code < 300:
+                raise ValueError(f"INTEGRATED_REAL_TE_HTTP_{response.status_code}")
+            body = response.json()
+            self.raw = body["choices"][0]["message"]["content"]
+            if not isinstance(self.raw, str):
+                raise ValueError("INTEGRATED_REAL_TE_CONTENT_INVALID")
+            self.stats = {
+                "provider": self.policy["provider"],
+                "model": body.get("model", self.policy["model"]),
+                "request_id": request_id,
+                "provider_request_id": response.headers.get("x-request-id"),
+                "http_status": response.status_code,
+                "usage": body.get("usage") or {},
+                "request_sha256": digest(request_bytes),
+                "response_sha256": digest(response.content),
+                "real_provider_requests": 1,
+                "retries": 0,
+                "fallback_calls": 0,
+                "cache_hits": 0,
+            }
+            if self.runtime_binding is not None:
+                verify_runtime_binding(
+                    self.runtime_binding, self.runtime_binding_schema,
+                    expected={"binding_sha256": frozen_binding["binding_sha256"]},
+                )
+                self.trace.event(
+                    "evaluation_binding_verified_for_ev_handoff",
+                    module="new-evaluator",
+                    inputs=self.runtime_binding["artifact_ids"],
+                    task_id=self.task_id,
+                )
+            return self.raw, self.stats
+        except BaseException as exc:
+            self.trace.write(
+                "te.provider-event",
+                {"version": VERSION, "phase": "TERMINAL_ERROR", "error_type": type(exc).__name__,
+                 "transport_mode": "FAKE" if self.fixture_transport else "REAL"},
+                module="task-executor",
+                parents=[self.execution_artifact_id, request_env["artifact_id"]],
+                task_id=self.task_id,
+                execution_id=self.execution_id,
+                fixture=self.fixture_transport,
+            )
+            raise
+
+
+def run_integrated(config_path, output, *, production_config, transport=None, api_key=None, **kwargs):
+    """Run T1-T7 with one real TE slot; caller supplies a newly authorized config."""
+    if production_config.get("method_pack"):
+        from .wp1_method_pack import run_method_pack
+        return run_method_pack(production_config, output)
+    from ..wp3.runner import run_offline
+
+    if production_config.get("authorization", {}).get("execute_authorized") is not True:
+        raise ValueError("EXECUTE_AUTHORIZATION_MISSING")
+    if (
+        production_config.get("profile") == "ODE_INTEGRATED_V1_RUNTIME_CONTRACTS"
+        and not production_config.get("runtime_contracts")
+    ):
+        raise ValueError("RUNTIME_BINDING_MISSING")
+    factory = IntegratedProductionFactory(
+        production_config, transport=transport, api_key=api_key
+    )
+    result = run_offline(
+        config_path,
+        output,
+        te_solver_factory=factory,
+        execution_provider=factory.policy["provider"],
+        execution_model=factory.policy["model"],
+        # The existing T1-T7 completeness contract remains OFFLINE_E2E.  The
+        # versioned production extension is checked independently from its raw
+        # evidence and run-level ledger; the legacy 14-file Canary profiles are
+        # intentionally not reused for the 131+ artifact integrated graph.
+        run_profile="OFFLINE_E2E",
+        run_id=production_config["run_id"],
+        **kwargs,
+    )
+    if result.get("status") == "PASS":
+        result["integrated_provider_evidence"] = verify_integrated_evidence(output)
+    return result

@@ -17,6 +17,7 @@
   "unified_runner": "PASS_WP1_METHOD_CHAIN",
   "real_provider": "NOT_RUN",
   "tests": "14 passed",
-  "production_run_integrated": "NOT_VERIFIED",
-  "wp1_final": "PASS"
+  "production_run_integrated": "PASS",
+  "wp1_final": "PASS",
+  "production_entry": "run_integrated method_pack"
 }

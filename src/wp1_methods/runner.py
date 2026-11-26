@@ -10,10 +10,10 @@ from evaluator.suite import Suite
 from evaluator.preflight import validate_suite
 from ode_oracle_factory.model import sha
 
-def run_all(*, base, asset, identity, requested=None):
+def run_all(*, base, asset, identity, requested=None, output=None):
     base=Path(base); requested=requested or list(SPECS)
     selected, excluded = select(requested, asset_type='api')
-    out=base/'unified'; shutil.rmtree(out,ignore_errors=True); out.mkdir(parents=True)
+    out=Path(output) if output else base/'unified'; shutil.rmtree(out,ignore_errors=True); out.mkdir(parents=True)
     records=[]; trace_events=[]
     for spec in selected:
         mid=spec.method_id; suite=base/'evidence'/f'suite-{mid}'
